@@ -16,16 +16,8 @@ module.exports = {
     // loader配置
     module:{
         rules:[      
-            {
-                // test 属性规定什么文件需要loader
-                test:/\.css$/,
-
-                // 单个loader时写法
-                // {loader:"css-loader"}
-                // 多个loader 则由use属性以数组形式
-                // 顺序是从右到左执行 或 从下到上
-                use:["style-loader","css-loader"]
-            }
+            {test:/\.css$/,use:["style-loader","css-loader"]},
+            {test:/\.less$/,use:["style-loader","less-loader"]},
         ]
     },
 
