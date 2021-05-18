@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const HWP = require('html-webpack-plugin');
+const MCEP = require('mini-css-extract-plugin');
 module.exports = {
     // 入口文件
     entry:{
@@ -16,14 +17,18 @@ module.exports = {
     // loader配置
     module:{
         rules:[
-            {test:/\.css$/,use:["style-loader","css-loader"]},
-            {test:/\.less$/,use:["style-loader","css-loader","less-loader"]},
-            {test:/\.scss$/,use:["style-loader","css-loader","sass-loader"]},
-        ]
+            // {test:/\.css$/,use:["style-loader","css-loader"]},
+            // 顺序永远是从右到左
+            // MCEP.loader 会创建一个新的css然后将右边的结果打包到这个css中，然后在页面中用link引入
+            {test:/\.css$/,use:[MCEP.loader,"css-loader"]},
+            {test:/\.less$/,use:[MCEP.loader,"css-loader","less-loader"]},
+            {test:/\.scss$/,use:[MCEP.loader,"css-loader","sass-loader"]},
+        ],
     },
 
     // plugins配置
     plugins:[
+        // 配置html出口
         new HWP({
             // 打包文件路径
             template:"./src/index.html",
@@ -38,7 +43,11 @@ module.exports = {
                 // 移除注释
                 removeComments:true
             }
-        }),    
+        }),  
+        // 配置css link出口
+        new MCEP({
+            filename:'demo.css'
+        })
     ],
 
     // 指定模式
