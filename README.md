@@ -11,7 +11,7 @@
 ## 1.下载
 
  ```
- npm install html-webpack-plugin -D
+ $ npm install html-webpack-plugin -D
  ```
 
 ## 2.引用
